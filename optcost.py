@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # -*- coding: utf-8 -*-
 """
 Created on Wed Mar 28 11:02:49 2018
@@ -130,3 +131,4 @@ if __name__ == '__main__':
     print('Found %s, Depth: %s' %(mytree.search(4)))
     print()
     mytree.printTree()
+

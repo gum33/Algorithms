@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # -*- coding: utf-8 -*-
 """
 Created on Wed Mar 28 15:23:18 2018
@@ -145,5 +146,3 @@ print()
 print('Found %s, Depth: %s' %(mytree.search(4)))
 print()
 mytree.printTree()
-
-#mytree.search(10)
