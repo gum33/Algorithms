@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # -*- coding: utf-8 -*-
 """
 Created on Wed Mar 28 11:02:49 2018
@@ -34,13 +34,11 @@ class bTree:
                 self._insert(node.right, val)     
             else:
                 node.right = Node(val)
-                node.right.parent = node
         else:
             if node.left is not None:
                 self._insert(node.left, val)
             else:
                 node.left = Node(val)
-                node.left.parent = node
     #Search bTree                  
     def search(self, val):
         if self.root is not None:
@@ -58,6 +56,16 @@ class bTree:
                return self._search(node.left, val, depth+1)
             else:
                 return self._search(node.right, val, depth+1)
+            
+    def printTree(self):
+        if(self.root is not None):
+            self._printTree(self.root)
+
+    def _printTree(self, node):
+        if(node is not None):
+            print(node)
+            self._printTree(node.left)
+            self._printTree(node.right)
         
 
 
@@ -93,17 +101,53 @@ def optBinaryTree(f):
         
     OptimalSearchTree(f)
     
-    def constructTree(R):
-        optTree = bTree()
-        
-    return OptCost, R
+
+    optTree = bTree()
+    print(R)
+    r = R[0,n-1]
+    optTree.insert(r)
+    
+    #Insert left subtree
+    def insertLower(i,j,r):
+        x = r
+        while x==r:
+            if r not in R[:,j]:
+                x = R[i,j]
+                optTree.insert(x)
+            else: j-=1
+        if i+1<n:    
+            if R[i+1,j] != 0:
+                insertHigher(i,j,x)
+        if j>0:
+            print(j)
+            if R[i,j-1] != 0:
+                insertLower(i,j,x)
+    #Insert right subtree   
+    def insertHigher(i,j,r):
+        x = r
+        while x == r:
+            if r not in R[i,:]:
+                x = R[i,j]
+                optTree.insert(x)
+            else: i+=1
+        if i+1<n:
+            if R[i+1,j] != 0:
+                print(R[i+1,j])
+                insertHigher(i,j,x)
+        if j-1<0:        
+            if R[i,j-1] != 0:
+                insertLower(i,j,x)
+    insertLower(0,n-1,r)
+    insertHigher(0,n-1,r)
+    
+    return OptCost, R,optTree
 
 #Gráðug smíð á tré fyrir lykla A[1..n] með tíðnir f
 def greedyTree(A, f):
-    gt = None
+    gt = bTree()
     order = np.argsort(-f)
     for i in order:
-        gt = insert(gt, A[i])
+        gt.insert(A[i])
     return gt
 
     
@@ -112,23 +156,25 @@ if __name__ == '__main__':
     #Setjum inn tíðni fylkið sem við viljum reikna
     A = [1, 2, 3, 4, 5, 6]
     f = np.array([0.15, 0.1, 0.12, 0.03, 0.2, 0.4],dtype=float)
+    gt = greedyTree(A,f)
+    tree = bTree()
+    tree.insert(5)
+    tree.insert(2)
+    
+    
+    
     a = Node(3)
     xd = optBinaryTree(f)
     f2 = np.array([0.5, 0.2, 0.3])
     B = [1, 2, 3]
     xd2 = optBinaryTree(f2)
-    print(xd2[1])
-    print(xd[0])
-    gt = greedyTree(A,f)
-    print(search(gt,5))
-    mytree = Treap()
-
-    for i in range(1,5):
-       mytree.insert( i)
-    
+    xd2[2].printTree()
+    xd[2].printTree()
+  
     mytree.printTree()
     print()
     print('Found %s, Depth: %s' %(mytree.search(4)))
     print()
     mytree.printTree()
 
+    
