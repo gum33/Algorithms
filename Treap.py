@@ -6,7 +6,7 @@ Created on Wed Mar 28 15:23:18 2018
 """
 import random 
 import numpy as np
-from time import sleep
+
 
 class NodeT:
     def __init__(self, val):
@@ -16,6 +16,7 @@ class NodeT:
             self.val = val
             self.freq = random.uniform(0,1)
             
+            
     def __str__(self):
          return 'value: %s, Priority: %s' % (self.val, self.freq)
 
@@ -23,8 +24,13 @@ class Treap:
     
     def __init__(self):
         self.root = None
-  
+        self.size = 0
+        
+    def getSize(self):
+        return self.size
+    
     def insert(self, val):
+        self.size +=1
         if self.root is None:
             self.root = NodeT(val)
         else:
@@ -66,7 +72,7 @@ class Treap:
             grandparent.right = node
         node.left = parent
         parent.parent = node
-        if grandparent is not None:
+        if grandparent != None:
             if(node.freq > grandparent.freq):
                 if grandparent.left is node:
                     self.swapright(node)
@@ -90,11 +96,12 @@ class Treap:
             grandparent.right = node
         node.right = parent
         parent.parent = node
-        if(node.freq > grandparent.freq):
-            if grandparent.left is node:
-                self.swapright(node)
-            else:
-                self.swapleft(node)
+        if grandparent != None:
+            if(node.freq > grandparent.freq):
+                if grandparent.left is node:
+                    self.swapright(node)
+                else:
+                    self.swapleft(node)
                         
     #Treap search                   
     def search(self, val):
@@ -106,7 +113,7 @@ class Treap:
     #Regular search but new freq provided.
     def _search(self,  node, val, depth=1):
             #Found node, swap give new prio
-            if val is node.val:
+            if val == node.val:
                 freq = random.uniform(0,1)
                 if freq > node.freq:
                     node.freq = freq
@@ -135,13 +142,5 @@ class Treap:
             self._printTree(node.left)
             self._printTree(node.right)
             
-mytree = Treap()
 
-for i in range(1,5):
-   mytree.insert( i)
-
-mytree.printTree()
-print()
-print('Found %s, Depth: %s' %(mytree.search(4)))
-print()
-mytree.printTree()
+    
